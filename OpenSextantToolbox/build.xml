@@ -3,6 +3,11 @@ Build file for OpenSextantToolbox.
 =======================================================================-->
 <project name="OpenSextantToolbox" basedir="." default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+        <target name="getivy" description="Used to install the ivy task jar">
+          <mkdir dir="/usr/share/ant/lib"/>
+          <get dest="/usr/share/ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"/>
+        </target>
+
 	<!-- include properties -->
 	<property file="build.properties" />
 
