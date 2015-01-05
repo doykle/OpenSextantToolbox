@@ -6,30 +6,47 @@ RUN yum install -y epel-release \
  && yum clean all
 
 # Update the system to current packages;
-RUN yum install -y wget \
- && yum install -y tar \
- && yum install -y zip unzip \
- && yum install -y ant java-1.7.0-openjdk-devel ant-apache-regexp java-util \
- && yum install -y java-1.7.0-openjdk \
- && yum install -y java-1.7.0-openjdk-devel \
- && yum install -y ivy \
+RUN yum install -y \
+      ant \
+      ant-apache-regexp \
+      ivy \
+      java-1.7.0-openjdk \
+      java-1.7.0-openjdk-devel \
+      java-util \
+      tar \
+      unzip \
+      wget \
+      zip \
  && yum clean all 
 
 # Get a tagged release of OpenSextantToolbox -- 2.2.3 has large gaz turned on
-RUN wget -O ost.tar.gz https://github.com/streamcorpus/OpenSextantToolbox/archive/2.2.3.tar.gz
-RUN tar xzf ost.tar.gz
+ENV OST_VERSION=2.2.3 GAZDATA_VERSION=20141229
 
-# Get pre-built "merged" gazetteer files, see full listing: http://opensextant.org/downloads/gazdata/
-RUN cd OpenSextantToolbox-*/LanguageResources/resources \
+RUN wget -O ost.tar.gz https://github.com/streamcorpus/OpenSextantToolbox/archive/${OST_VERSION}.tar.gz \
+ && tar xzf ost.tar.gz \
+ && rm ost.tar.gz
+
+# Get pre-built "merged" gazetteer files
+# See full listing: http://opensextant.org/downloads/gazdata/
+RUN cd OpenSextantToolbox-${OST_VERSION}/LanguageResources/resources \
  && mkdir geoGazetteer \
- && wget http://opensextant.org/downloads/gazdata/gazdata-20141229.zip \
- && unzip gazdata*zip
+ && wget http://opensextant.org/downloads/gazdata/gazdata-${GAZDATA_VERSION}.zip \
+ && unzip gazdata-${GAZDATA_VERSION}.zip \
+ && rm gazdata-${GAZDATA_VERSION}.zip
 
-RUN cd OpenSextantToolbox-*/OpenSextantToolbox/ && ant release
+# Build and unpack the release
+# Note that the final zip file version includes a date stamp
+RUN cd OpenSextantToolbox-${OST_VERSION}/OpenSextantToolbox/ \
+ && ant release -Dversion=${OST_VERSION} \
+ && cd ../.. \
+ && unzip OpenSextantToolbox-${OST_VERSION}/OpenSextantToolbox/opensextant-toolbox-${OST_VERSION}*.zip \
+ && cd OpenSextantToolbox-${OST_VERSION}/OpenSextantToolbox/ \
+ && ant clean
 
-# unpack the release
-RUN unzip OpenSextantToolbox-*/OpenSextantToolbox/opensextant-toolbox-*zip
+# Record build number
+COPY container-version /etc/
 
 # Finally, run the OpenSextant tagger end point
 EXPOSE 8182
-CMD cd opensextant-toolbox-*/ && bash ./scripts/start.sh
+WORKDIR opensextant-toolbox-${OST_VERSION}
+CMD bash ./scripts/start.sh
