@@ -30,6 +30,7 @@ RUN wget -O ost.tar.gz https://github.com/streamcorpus/OpenSextantToolbox/archiv
 # See full listing: http://opensextant.org/downloads/gazdata/
 RUN cd OpenSextantToolbox-${OST_VERSION}/LanguageResources/resources \
  && mkdir geoGazetteer \
+ && cd geoGazetteer \
  && wget http://opensextant.org/downloads/gazdata/gazdata-${GAZDATA_VERSION}.zip \
  && unzip gazdata-${GAZDATA_VERSION}.zip \
  && rm gazdata-${GAZDATA_VERSION}.zip
