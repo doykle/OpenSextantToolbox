@@ -17,7 +17,7 @@ RUN yum install -y \
       unzip \
       wget \
       zip \
- && yum clean all 
+ && yum clean all
 
 # Get a tagged release of OpenSextantToolbox -- 2.2.3 has large gaz turned on
 ENV OST_VERSION=2.2.3 GAZDATA_VERSION=20141229
@@ -33,7 +33,9 @@ RUN cd OpenSextantToolbox-${OST_VERSION}/LanguageResources/resources \
  && cd geoGazetteer \
  && wget http://opensextant.org/downloads/gazdata/gazdata-${GAZDATA_VERSION}.zip \
  && unzip gazdata-${GAZDATA_VERSION}.zip \
- && rm gazdata-${GAZDATA_VERSION}.zip
+ && rm gazdata-${GAZDATA_VERSION}.zip \
+ && (grep '\[LATIN\]' MergedGazetteer.txt > latin.tsv) \
+ && mv latin.tsv MergedGazetteer.txt
 
 # Build and unpack the release
 # Note that the final zip file version includes a date stamp
