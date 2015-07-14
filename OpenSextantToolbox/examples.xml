@@ -27,7 +27,7 @@ ant file to run OpenSextantToolbox Examples.
 	<property name="test.patterns.geo" location="${toobox.home}/LanguageResources/resources/patterns/geocoord_regex.cfg" />
 
 	<!-- location of the test data and test results directory-->
-	<property name="test.testdocs.dir" location="${toobox.home}/LanguageResources/TestData/TestDocs" />
+	<property name="test.testdocs.dir" location="${toobox.home}/LanguageResources/TestData/testDocs" />
 	<property name="test.matcher.file" location="${toobox.home}/LanguageResources/TestData/MatcherTestData/matcherTest.txt" />
 	<property name="test.dateTest.file" location="${toobox.home}/LanguageResources/TestData/RegexTestData/dateTime_test.csv" />
 	<property name="test.geoTest.file" location="${toobox.home}/LanguageResources/TestData/RegexTestData/geocoord_test.csv" />
@@ -150,5 +150,26 @@ ant file to run OpenSextantToolbox Examples.
 
 	</target>
 
+	
+<target name="run.serviceclient">	
+	<echo />
+	<echo>--------------------------------------------------</echo>
+	<echo>Running the Service Client Example</echo>
+	<echo>--------------------------------------------------</echo>
+	<!-- run the geocoord regex example -->
+	<java classname="org.opensextant.service.processing.ServiceDriver" classpathref="examples.runtime.standalone.classpath" fork="yes" dir="${basedir}">
+		<!-- add some memory -->
+		<jvmarg value="-Xmx500M" />
+		<!-- point to the log config file -->
+		<jvmarg value="-Dlog4j.configuration=file:${toobox.home}/etc/log4j.properties" />
+		<!-- directory containing the test doc -->
+		<arg value="${test.testdocs.dir}" />
+		<!-- host of the extractor service -->
+		<arg value="localhost" />
+		<!-- number of submitter threads-->
+		<arg value="6" />
+	</java>
+
+</target>
 
 </project>
