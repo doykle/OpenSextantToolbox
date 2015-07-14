@@ -10,8 +10,8 @@ RUN yum install -y \
       ant \
       ant-apache-regexp \
       ivy \
-      java-1.7.0-openjdk \
-      java-1.7.0-openjdk-devel \
+      java-1.8.0-openjdk \
+      java-1.8.0-openjdk-devel \
       java-util \
       tar \
       unzip \

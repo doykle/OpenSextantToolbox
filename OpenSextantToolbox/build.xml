@@ -1,5 +1,5 @@
 <!--======================================================================
-Build file for OpenSextantToolbox.  
+Build file for OpenSextantToolbox.
 =======================================================================-->
 <project name="OpenSextantToolbox" basedir="." default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
@@ -16,7 +16,7 @@ Build file for OpenSextantToolbox.
 
 	<!-- Project level properties -->
 	<property name="project.name" value="OpenSextantToolbox" />
-	<property name="version" value="2.2.1" />
+	<property name="version" value="2.2" />
 	<property name="releaseStatus" value="integration" />
 	<property name="java_target_version" value="1.8" />
 
@@ -63,14 +63,14 @@ Build file for OpenSextantToolbox.
 
 	<!-- Properties for creating/loading the Solr gazetteer -->
 	<property name="solr.home" location="${basedir}/build/solr" />
-	
+
 	<!-- For testing we can use "MergedGazetteer_SMALL.txt", for production use MergedGazetteer.txt -->
 	<property name="csv.gaz" value="${resources.home}/resources/geoGazetteer/MergedGazetteer.txt" />
 	<!--property name="csv.gaz" value="${resources.home}/resources/geoGazetteer/MergedGazetteer_SMALL.txt" /-->
-	
+
 	<!-- For testing in Travis, must have some data checked into GitHub -->
 	<!--property name="csv.gaz" value="${resources.home}/TestData/testGazetteer/MergedGazetteer_SMALL.txt" /-->
-	
+
 	<!--property name="fieldnames.gaz" value="id,place_id,name,lat,lon,feat_class,feat_code,FIPS_cc,cc,ISO3_cc,adm1,adm2,adm3,adm4,adm5,source,src_place_id,src_name_id,script,conflate_key,name_bias,id_bias,name_type,name_type_system,partition" /-->
 	<property name="index.vocab" value="${resources.home}/resources/Vocabularies/vocab.def" />
 	<!--property name="fieldnames.vocab" value="id,phrase,category,taxonomy" /-->
@@ -151,7 +151,7 @@ Build file for OpenSextantToolbox.
 	<!-- omit from build.properties if no proxy -->
 	<target name="setProxy">
 		<property name="proxy.host" value="" />
-		<property name="proxy.port" value="80" />	
+		<property name="proxy.port" value="80" />
 		<setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}" />
 	</target>
 
@@ -199,7 +199,7 @@ Build file for OpenSextantToolbox.
 			<zipfileset file= "${build.dir}/opensextant-toolbox.jar" prefix= "OpenSextantToolbox/lib" />
 		</zip>
 	</target>
-	
+
 	<!-- Build and populate the Solr gazetteer -->
 	<target name="build.gaz">
 		<antcall target="clean.gaz" />
@@ -292,15 +292,15 @@ Build file for OpenSextantToolbox.
 			<artifacts pattern="${build.dir}/[artifact].[ext]"/>
 		</ivy:publish>
 	</target>
-	
+
 	<!-- Publish the opensextant jars to the shared Ivy repo-->
 	<target name="publish-shared" depends="build">
 		<ivy:publish resolver="shared" overwrite="true" pubrevision="${version}"   >
 			<artifacts pattern="${build.dir}/[artifact].[ext]"/>
 		</ivy:publish>
 	</target>
-	
-	
+
+
 	<!-- create release directory structure -->
 	<target name="release.prepare">
 		<delete dir="${release.dir}" />
@@ -329,14 +329,14 @@ Build file for OpenSextantToolbox.
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		
+
 		<!--copy todir="${release.dir}/lib/solr">
 			<fileset dir="${basedir}/lib/solr">
 				<include name="*.jar" />
 			</fileset>
 		</copy-->
-		
-		
+
+
 		<!--copy todir="${release.dir}/lib/solr">
 			<fileset dir="${basedir}/lib/solr">
 				<include name="*.jar" />
@@ -431,7 +431,7 @@ Build file for OpenSextantToolbox.
 		<antcall target="release.gaz" />
 		<antcall target="release.examples.src" />
 		<antcall target="release.misc" />
-		
+
 		<!-- delete existing release zip if there -->
 		<delete quiet="true" file="${basedir}/opensextant-toolbox-${version}-${DSTAMP}.zip" />
 
@@ -563,7 +563,7 @@ Build file for OpenSextantToolbox.
 	</target>
 
 
-	<target name="example.serviceClient">	
+	<target name="example.serviceClient">
 		<echo />
 		<echo>--------------------------------------------------</echo>
 		<echo>Running the Service Client Example</echo>
@@ -583,9 +583,9 @@ Build file for OpenSextantToolbox.
 		</java>
 
 	</target>
-	
-	
-	
+
+
+
 
 	<!-- deploy OpenSextantToolbox to a local GATE installation to test -->
 	<!-- NOTE: this target presumes a release has been built but doesnt trigger one -->
