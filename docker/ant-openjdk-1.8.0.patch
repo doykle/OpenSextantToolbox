@@ -1,0 +1,14 @@
+diff -up jpackage-utils-1.7.5/java-utils/java-functions.openjdk8 jpackage-utils-1.7.5/java-utils/java-functions
+--- a/usr/share/java-utils/java-functions	2013-07-09 16:31:13.006395520 +0200
++++ b/usr/share/java-utils/java-functions	2013-07-09 16:38:22.329401962 +0200
+@@ -169,8 +169,8 @@ set_jvm_dirs() {
+         # Yuck, "grep -o" would be cleaner, but requires GNU grep >= 2.5.
+         # This could be improved/simplified if sed had non-greedy matching.
+         JAVA_VERSION=$($JAVACMD $opt 2>&1 | sed -n \
+-            -e '/java \(full \)*version "/s/'$re'/<<<\1>>>/' \
+-            -e '/java \(full \)*version "/s/.*<<<\([^>]\{1,\}\)>>>.*/\1/p')
++            -e '/\(openjdk\|java\) \(full \)*version "/s/'$re'/<<<\1>>>/' \
++            -e '/\(openjdk\|java\) \(full \)*version "/s/.*<<<\([^>]\{1,\}\)>>>.*/\1/p')
+         if [ -n "$JAVA_VERSION" ] ; then
+             break
+         fi
