@@ -28,6 +28,7 @@ B=${1:-0}
 echo "2.2.3-$B" > "$O/container-version"
 if [ "$D" != "$O" ]; then
     cp -a "$D/Dockerfile" "$O"
+    cp -a "$D/ant-openjdk-1.8.0.patch" "$O"
 fi
 
 exit 0
