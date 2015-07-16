@@ -19,8 +19,8 @@ RUN yum install -y \
       zip \
  && yum clean all
 
-# Get a tagged release of OpenSextantToolbox -- 2.2.3 has large gaz turned on
-ENV OST_VERSION=2.2.4 GAZDATA_VERSION=20141229
+# Get a tagged release of OpenSextantToolbox
+ENV OST_VERSION=2.2.6 GAZDATA_VERSION=20141229
 
 RUN wget -O ost.tar.gz https://github.com/streamcorpus/OpenSextantToolbox/archive/${OST_VERSION}.tar.gz \
  && tar xzf ost.tar.gz \
